@@ -1,0 +1,183 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' %}"></script>
+
+   <!--Aqui inicia modal para cambiar estado-->
+   <div id="usuario-estado" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLiveLabel">Actualizar estado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+           
+                
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <form action="" method="POST" id="form-estado">
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="mt-2" for="correo"><strong>Estado:</strong></label>
+                                </div>
+
+                                <div class="row">
+                                    <select name="estado" id="estado-select" class="form-control">
+                                        <option value="">Seleccione un estado</option>
+                                        <option value="2">Aceptado</option>
+                                        <option value="3">Terminado</option>
+                                        
+                                    </select>
+                                </div>
+
+                                
+                               
+                            </div>
+                    
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                    
+                    
+                    
+                        </form>
+                    </div>
+                    
+                    
+
+                </div>
+           
+        
+        </div>
+    </div>
+</div>
+<div class="card card-dark">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-search"></i>
+            {{ title }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered" id="table-requirements">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 2%; text-align: center;">#</th>
+                    <th scope="col" style="width: 10%; text-align: center;">Dueño</th>
+                    <th scope="col" style="width: 14%; text-align: center;">Requerimiento</th>
+                    <th scope="col" style="width: 10%; text-align: center;">Descripción</th>
+                    <th scope="col" style="width: 10%; text-align: center;">Grupo</th>
+                    
+                    <th scope="col" style="width: 10%; text-align: center;">Estado</th>
+                    <th scope="col" style="width: 10%; text-align: center;">Fecha asignado</th>
+                    
+                    <th scope="col" style="width: 10%; text-align: center;">Acciones</th>
+                    
+            
+                </tr>
+            </thead>
+            <tbody>
+                {% for re in reasignados %}
+                
+                <tr>
+                    <td style="text-align: center;">{{re.requerimiento.id}}</td>
+                    <td style="text-align: center;">{{re.requerimiento.dueño}}</td>
+                    <td style="text-align: center;">{{re.requerimiento.tipe_req}}</td>
+                    <td style="text-align: center;">{{re.requerimiento.description}}</td>
+                    <td style="text-align: center;">{{re.requerimiento.grupoUsuario.name}}</td>
+                    
+                    <td style="text-align: center;">{{re.requerimiento.estadoRequerimiento}}</td>
+                    
+                    <td style="text-align: center;">{{re.fechaReasignado|date:"M d, Y"}}</td>
+                    
+                    <td style="text-align: center;"><a href="{% url 'requirements:timeline' re.requerimiento.id  %}"  class="label mr-3" data-toggle="tooltip" data-placement="top" title="Ver timeline" style="color: grey;"><i class="fas fa-stream"></i></i></a><a href="#" class="label theme-bg f-12" onclick="ActualizarEstado({{re.requerimiento.id}})"><i class="fas fa-edit"></i></a></td>
+
+                </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        {% block buttons_list %}
+            <a href="{% url 'requirements:requirements_create' %}" class="btn btn-primary btn-flat btnTest">
+                <i class="fas fa-plus"></i> Nuevo registro
+            </a>
+            <a href="{{ list_url }}" class="btn btn-success btn-flat">
+                <i class="fas fa-sync"></i> Actualizar
+            </a>
+        {% endblock %}
+    </div>
+</div>
+
+
+<script >
+    $(document).ready(function() {
+
+    
+    $('#table-requirements').DataTable( {
+       responsive:true,
+       autoWidth: false,
+
+    } );
+
+
+   
+} );
+
+
+function ActualizarEstado(id) {
+    const idRequerimiento = id;
+    $('#usuario-estado').modal('show');
+    
+    
+    let form = $('#form-estado');
+    form.on('submit', function(e) {
+        e.preventDefault()
+        const idEstado = $('#estado-select').val()
+        
+        
+
+
+        $.ajax({
+                url:`/requirements/requirement/update-estado/${idRequerimiento}/${idEstado}/`,
+                type: "POST",
+                data: {},
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                
+            }).done(function (data) {
+                console.log(data);
+                $('#usuario-estado').modal('hide');
+                Swal.fire({
+                        icon: 'success',
+                        title: 'Muy bien!',
+                        text: 'Has actualizado el estado',
+                    })
+                setTimeout(function() {
+                    document.location.reload()
+                }, 4000)
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Ha ocurrido un error interno!',
+                    })
+            }).always(function (data) {
+                
+            });
+    })
+}
+
+</script>
+
+{% endblock %}
