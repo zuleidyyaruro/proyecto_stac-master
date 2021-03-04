@@ -22,7 +22,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <form action="" method="POST" id="form-estado">
+                        <form novalidate action="" method="POST" id="form-estado">
                             <div class="form-group">
                                 <div class="row">
                                     <label class="mt-2" for="correo"><strong>Estado:</strong></label>
@@ -55,8 +55,6 @@
                     
                         </form>
                     </div>
-                    
-                    
 
                 </div>
            
@@ -68,7 +66,7 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-search"></i>
-            {{ title }}
+            Lista de Requerimientos
         </h3>
     </div>
     <div class="card-body">
@@ -114,16 +112,7 @@
             
         </table>
     </div>
-    <div class="card-footer">
-        {% block buttons_list %}
-            <a href="{% url 'requirements:requirements_create' %}" class="btn btn-primary btn-flat btnTest">
-                <i class="fas fa-plus"></i> Nuevo registro
-            </a>
-            <a href="{{ list_url }}" class="btn btn-success btn-flat">
-                <i class="fas fa-sync"></i> Actualizar
-            </a>
-        {% endblock %}
-    </div>
+
 </div>
 
 

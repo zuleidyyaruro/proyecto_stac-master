@@ -4,154 +4,144 @@
 
 {% block content %}
 
-{% if requerimiento %}
+    {% if requerimiento %}
 
-<div class="content-wrapper" style="min-height: 1576.38px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Timeline {{requerimiento.tipe_req}}</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Timeline</li>
-            </ol>
-          </div>
+        <div class="content-wrapper" style="min-height: 1576.38px;">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Timeline {{ requerimiento.tipe_req }}</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Timeline</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+
+                    <!-- Timelime example  -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- The time line -->
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                <div class="time-label">
+                                    <span class="bg-blue">{{ fechaAsignado }}</span>
+                                </div>
+                                <!-- /.timeline-label -->
+
+                                <!-- timeline item -->
+
+                                <div>
+                                    <i class="fas fa-envelope bg-blue"></i>
+                                    <div class="timeline-item">
+                                        {% if requerimiento.assign_to == request.user %}
+
+                                            <h3 class="timeline-header"><a href="#">{{ requerimiento.dueño }}</a> Te
+                                                asignó un requerimiento</h3>
+
+                                        {% else %}
+                                            <h3 class="timeline-header"><a href="#">{{ requerimiento.dueño }}</a> asignó
+                                                un requerimiento a: <strong>{{ requerimiento.assign_to }}</strong></h3>
+                                        {% endif %}
+                                        <div class="timeline-body">
+                                            {{ requerimiento.description }}
+                                        </div>
+                                        <div class="timeline-footer">
+                                            <a class="btn btn-primary btn-sm" href="{{ requerimiento.file.url }}"
+                                               target="_blank">Ver Documento</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- END timeline item -->
+
+                                {% if fechaAceptado != fechaAsignado and fechaAceptado != fechaTerminado %}
+                                    <div class="timeline">
+                                    <!-- timeline time label -->
+                                    <div class="time-label">
+                                        <span class="bg-yellow">{{ fechaAceptado }}</span>
+                                    </div>
+                                    <!-- /.timeline-label -->
+
+                                    <!-- timeline item -->
+
+                                    <div>
+                                        <i class="fas fa-thumbs-up bg-yellow"></i>
+                                        <div class="timeline-item">
+
+                                            <h3 class="timeline-header no-border"> Aceptaste el requerimiento</h3>
+                                        </div>
+                                    </div>
+                                    <!-- END timeline item -->
+                                {% endif %}
+
+                                {% if fechaReasignado != '' and usuarioReasignado != '' %}
+                                    <div class="timeline">
+                                    <!-- timeline time label -->
+                                    <div class="time-label">
+                                        <span class="bg-red">{{ fechaReasignado }}</span>
+                                    </div>
+                                    <!-- /.timeline-label -->
+
+                                    <!-- timeline item -->
+
+                                    <div>
+                                        <i class="fas fa-code-branch bg-red"></i>
+                                        <div class="timeline-item">
+
+                                            <h3 class="timeline-header no-border"> Reasignado el requerimiento a:
+                                                <strong> {{ usuarioReasignado }}</strong></h3>
+                                        </div>
+                                    </div>
+                                    <!-- END timeline item -->
+
+                                {% endif %}
+
+                                {% if fechaTerminado != fechaAsignado and fechaTerminado != fechaAceptado %}
+
+                                    <!-- timeline time label -->
+                                    <div class="time-label">
+                                        <span class="bg-green">{{ fechaTerminado }}</span>
+                                    </div>
+                                    <!-- /.timeline-label -->
+
+                                    <!-- timeline item -->
+
+                                    <div>
+                                        <i class="fas fa-check-circle bg-green"></i>
+                                        <div class="timeline-item">
+
+                                            <h3 class="timeline-header no-border"> Terminaste el requerimiento</h3>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                                <!-- END timeline item -->
+
+                                <div>
+                                    <i class="fas fa-clock bg-gray"></i>
+                                </div>
+                                </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                        <!-- /.timeline -->
+            </section>
+            <!-- /.content -->
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-
-        <!-- Timelime example  -->
-        <div class="row">
-          <div class="col-md-12">
-            <!-- The time line -->
-            <div class="timeline">
-              <!-- timeline time label -->
-              <div class="time-label">
-                <span class="bg-blue">{{fechaAsignado}}</span>
-              </div>
-              <!-- /.timeline-label -->
-
-
-              <!-- timeline item -->
-              
-              <div>
-                <i class="fas fa-envelope bg-blue"></i>
-                <div class="timeline-item">
-                  {% if requerimiento.assign_to == request.user %}
-                 
-                  <h3 class="timeline-header"><a href="#">{{requerimiento.dueño}}</a> Te asignó un requerimiento</h3>
-
-                  {% else %}
-                  <h3 class="timeline-header"><a href="#">{{requerimiento.dueño}}</a> asignó un requerimiento a: <strong>{{requerimiento.assign_to}}</strong> </h3>
-                  {% endif %}
-                  <div class="timeline-body">
-                    {{requerimiento.description}}
-                  </div>
-                  <div class="timeline-footer">
-                    <a class="btn btn-primary btn-sm" href="{{requerimiento.file.url}}" target="_blank">Ver Documento</a>
-                    
-                  </div>
-                </div>
-              </div>
-      
-              <!-- END timeline item -->
-
-              {% if fechaAceptado != fechaAsignado and fechaAceptado != fechaTerminado %}
-              <div class="timeline">
-                <!-- timeline time label -->
-                <div class="time-label">
-                  <span class="bg-yellow">{{fechaAceptado}}</span>
-                </div>
-                <!-- /.timeline-label -->
-                
-
-              <!-- timeline item -->
-              
-              <div>
-                <i class="fas fa-thumbs-up bg-yellow"></i>
-                <div class="timeline-item">
-                  
-                  <h3 class="timeline-header no-border"> Aceptaste el requerimiento</h3>
-                </div>
-              </div>
-              <!-- END timeline item -->
-
-            
-
-              {% endif %}
-
-
-              {% if fechaReasignado != '' and usuarioReasignado != '' %}
-              <div class="timeline">
-                <!-- timeline time label -->
-                <div class="time-label">
-                  <span class="bg-red">{{fechaReasignado}}</span>
-                </div>
-                <!-- /.timeline-label -->
-                
-
-              <!-- timeline item -->
-              
-              <div>
-                <i class="fas fa-code-branch bg-red"></i>
-                <div class="timeline-item">
-                  
-                  <h3 class="timeline-header no-border"> Reasignado el requerimiento a: <strong> {{usuarioReasignado}}</strong></h3>
-                </div>
-              </div>
-              <!-- END timeline item -->
-
-              {% endif %}
-
-            
-
-           
-
-
-              {% if fechaTerminado != fechaAsignado and fechaTerminado != fechaAceptado %}
-             
-                <!-- timeline time label -->
-                <div class="time-label">
-                  <span class="bg-green">{{fechaTerminado}}</span>
-                </div>
-                <!-- /.timeline-label -->
-                
-
-              <!-- timeline item -->
-             
-              <div>
-                <i class="fas fa-check-circle bg-green"></i>
-                <div class="timeline-item">
-                 
-                  <h3 class="timeline-header no-border"> Terminaste el requerimiento</h3>
-                </div>
-              </div>
-
-              {% endif %}
-              <!-- END timeline item -->
-
-              <div>
-                <i class="fas fa-clock bg-gray"></i>
-              </div>
-            </div>
-          </div>
-          <!-- /.col -->
-        </div>
-      </div>
-      <!-- /.timeline -->
-
-    </section>
-    <!-- /.content -->
-  </div>
-
-{% endif %}
+    {% endif %}
 
 {% endblock %}

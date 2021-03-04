@@ -27,12 +27,14 @@
                         {#                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Ventas</a></li>#}
                         {#                        <li><a href="#" class="dropdown-item"><i class="fas fa-chart-bar"></i> Reporte de Ventas</a></li>#}
                         <li><a href="{% url 'erp:indexc' %}" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>
-                        <li><a href="{% url 'requirements:requirements_create' %}" class="dropdown-item"><i class="fas fa-plus-circle"></i> Crear Requerimiento</a></li>
+
                         {% if request.user.is_superuser %}
-                        <li><a href="{% url 'requirements:lista_requirement_admin' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Lista Requerimientos</a></li>
+                            <li><a href="{% url 'requirements:requirements_create' %}" class="dropdown-item"><i class="fas fa-plus-circle"></i> Crear Requerimiento</a></li>
+                            <li><a href="{% url 'requirements:lista_requirement_admin' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Lista Requerimientos</a></li>
                         {% else %}
-                        <li><a href="{% url 'requirements:lista_requirement_user' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Mis Requerimientos</a></li>
-                        <li><a href="{% url 'requirements:lista_requirement_reasignados' %}" class="dropdown-item"><i class="fas fa-code-branch"></i> Reasignados</a></li>
+                        <li><a href="{% url 'requirements:indexr' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Requerimientos</a></li>
+
+                        {# <li><a href="{% url 'requirements:lista_requirement_reasignados' %}" class="dropdown-item"><i class="fas fa-code-branch"></i> Reasignados</a></li> #}
 
                         {% endif %}
                         <li><a href="{% url 'user:user_list' %}" class="dropdown-item"><i class="fas fa-user-friends"></i> Usuarios</a></li>

@@ -30,8 +30,6 @@
                     <th scope="col" style="width: 10%; text-align: center;">Fecha Terminado</th>
                     <th scope="col" style="width: 10%; text-align: center;">Acciones</th>
 
-
-
                 </tr>
             </thead>
 
@@ -49,7 +47,6 @@
                     <td style="text-align: center;">{{re.fechaAceptado|date:"M d, Y"}}</td>
                     <td style="text-align: center;">{{re.fechaTerminado|date:"M d, Y"}}</td>
                     <td style="text-align: center;"><a href="{% url 'requirements:timeline' re.id  %}"  class="label mr-3" data-toggle="tooltip" data-placement="top" title="Ver timeline" style="color: grey;"><i class="fas fa-stream"></i></i></a></td>
-
                 </tr>
                 {% endfor %}
             </tbody>

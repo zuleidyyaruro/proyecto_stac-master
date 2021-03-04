@@ -17,8 +17,7 @@
                 <h5 class="modal-title" id="exampleModalLiveLabel">Actualizar estado</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
-           
-                
+
                 <div class="modal-body">
 
                     <div class="form-group">
@@ -36,25 +35,17 @@
                                         
                                     </select>
                                 </div>
-
-                                
                                
                             </div>
                     
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
-                    
-                    
-                    
+
                         </form>
                     </div>
-                    
-                    
 
                 </div>
-           
-        
         </div>
     </div>
 </div>
@@ -62,7 +53,7 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-search"></i>
-            {{ title }}
+            Mis Requerimientos Reasignados
         </h3>
     </div>
     <div class="card-body">
@@ -79,8 +70,7 @@
                     <th scope="col" style="width: 10%; text-align: center;">Fecha asignado</th>
                     
                     <th scope="col" style="width: 10%; text-align: center;">Acciones</th>
-                    
-            
+
                 </tr>
             </thead>
             <tbody>
@@ -105,46 +95,29 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        {% block buttons_list %}
-            <a href="{% url 'requirements:requirements_create' %}" class="btn btn-primary btn-flat btnTest">
-                <i class="fas fa-plus"></i> Nuevo registro
-            </a>
-            <a href="{{ list_url }}" class="btn btn-success btn-flat">
-                <i class="fas fa-sync"></i> Actualizar
-            </a>
-        {% endblock %}
-    </div>
+
 </div>
 
 
 <script >
     $(document).ready(function() {
 
-    
     $('#table-requirements').DataTable( {
        responsive:true,
        autoWidth: false,
 
     } );
 
-
-   
 } );
-
 
 function ActualizarEstado(id) {
     const idRequerimiento = id;
     $('#usuario-estado').modal('show');
-    
-    
+
     let form = $('#form-estado');
     form.on('submit', function(e) {
         e.preventDefault()
         const idEstado = $('#estado-select').val()
-        
-        
-
 
         $.ajax({
                 url:`/requirements/requirement/update-estado/${idRequerimiento}/${idEstado}/`,
