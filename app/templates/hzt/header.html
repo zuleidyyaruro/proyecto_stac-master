@@ -26,18 +26,36 @@
                         {#                        <li><a href="#" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>#}
                         {#                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Ventas</a></li>#}
                         {#                        <li><a href="#" class="dropdown-item"><i class="fas fa-chart-bar"></i> Reporte de Ventas</a></li>#}
-                        <li><a href="{% url 'erp:indexc' %}" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>
+                        <li><a href="{% url 'erp:indexc' %}" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a>
+                        </li>
 
                         {% if request.user.is_superuser %}
-                            <li><a href="{% url 'requirements:requirements_create' %}" class="dropdown-item"><i class="fas fa-plus-circle"></i> Crear Requerimiento</a></li>
-                            <li><a href="{% url 'requirements:lista_requirement_admin' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Lista Requerimientos</a></li>
-                        {% else %}
-                        <li><a href="{% url 'requirements:indexr' %}" class="dropdown-item"><i class="fas fa-poll-h"></i> Requerimientos</a></li>
 
-                        {# <li><a href="{% url 'requirements:lista_requirement_reasignados' %}" class="dropdown-item"><i class="fas fa-code-branch"></i> Reasignados</a></li> #}
+                            <li class="nav-item has-treeview menu-open">
+                                <a href="{% url 'requirements:lista_requirement_admin' %}" class="dropdown-item">
+                                    <i class="fas fa-poll-h"></i>
+                                    Requerimientos
+                                </a>
+
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'requirements:indexr' %}" class="dropdown-item"><i
+                                    class="fas fa-poll-h"></i> Requerimientos</a></li>
+
+                            {# <li><a href="{% url 'requirements:lista_requirement_reasignados' %}" class="dropdown-item"><i class="fas fa-code-branch"></i> Reasignados</a></li> #}
 
                         {% endif %}
-                        <li><a href="{% url 'user:user_list' %}" class="dropdown-item"><i class="fas fa-user-friends"></i> Usuarios</a></li>
+                        <li><a href="{% url 'user:user_list' %}" class="dropdown-item"><i
+                                class="fas fa-user-friends"></i> Usuarios</a></li>
+
+                        <li>
+                            <a href="{% url 'reports:index-report' %}" class="dropdown-item">
+                                <i class="fas fa-file-alt"></i>
+                                Reportes
+                            </a>
+
+                        </li>
+
                     </ul>
                 </li>
             </ul>
@@ -47,7 +65,7 @@
             {% if request.user.groups.all %}
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                       class="nav-link dropdown-toggle">{{request.session.group.name}}</a>
+                       class="nav-link dropdown-toggle">{{ request.session.group.name }}</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow"
                         style="left: 0px; right: inherit;">
                         {% for g in request.user.groups.all %}

@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('core.login.urls')),
     path('user/', include('core.user.urls')),
     path('erp/', include('core.erp.urls')),
-    path('requirements/', include('core.requirements.urls'))
+    path('requirements/', include('core.requirements.urls')),
+    path('reports/', include('core.reports.urls'))
 ]
 
 if settings.DEBUG:

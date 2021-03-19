@@ -10,16 +10,20 @@
 <div class="card card-dark">
     <div class="card-header">
         <h3 class="card-title">
-            <i class="fas fa-building"></i> Tipo de Cliente
+            <i class="far fa-chart-bar"></i> Reportes
         </h3>
     </div>
     <div class="card-footer">
         {% block buttons_list %}
-        <a href="{% url 'erp:client_list' %}" class="btn btn-primary btn-flat btnTest">
-            <i class="fas fa-users"></i> Cliente-Persona
+        <a href="{% url 'reports:requirement_report' %}" class="btn btn-primary btn-flat btnTest">
+            <i class="fas fa-clipboard"></i> Reporte Requerimientos
         </a>
         <a href="{% url 'erp:clientemp_list' %}" class="btn btn-success btn-flat">
-            <i class="fas fa-building"></i> Cliente-Empresa
+            <i class="fas fa-users"></i> Reporte por Grupos
+        </a>
+
+        <a href="{% url 'erp:clientemp_list' %}" class="btn btn-primary btn-flat">
+            <i class="fas fa-sign"></i> Reporte por Estados
         </a>
         {% endblock %}
     </div>
