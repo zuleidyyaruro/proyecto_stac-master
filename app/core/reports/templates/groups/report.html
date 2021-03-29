@@ -6,6 +6,7 @@
     <script src="{% static 'lib/daterangepicker-3.1/spanish.js' %}"></script>
     <script src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
     <link rel="stylesheet" href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}"/>
+
     <link rel="stylesheet"
           href="{% static 'lib/datatables-1.10.20/plugins/buttons-1.6.1/css/buttons.bootstrap.min.css' %}"/>
     <script src="{% static 'lib/datatables-1.10.20/plugins/buttons-1.6.1/js/dataTables.buttons.min.js' %}"
@@ -19,7 +20,7 @@
     <script src="{% static 'lib/datatables-1.10.20/plugins/buttons-1.6.1/js/buttons.html5.min.js' %}"
             type="text/javascript"></script>
 
-    <script src="{% static 'requirement/js/report.js' %}"></script>
+    <script src="{% static 'group/js/report.js' %}"></script>
 
 {% endblock %}
 
@@ -28,7 +29,7 @@
     <div class="card card-dark">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-chart-bar"></i>
+                <i class="fas fa-users"></i>
                 {{ title }}
             </h3>
         </div>
@@ -46,18 +47,13 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Usuario Creador</th>
                     <th scope="col">Requerimiento</th>
                     <th scope="col">Grupo</th>
-                    <th scope="col">Asignado A</th>
-                    <th scope="col">Estado</th>
                     <th scope="col">Fecha</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% block rows %}
-
-
 
                 {% endblock %}
                 </tbody>

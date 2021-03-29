@@ -15,15 +15,15 @@
     </div>
     <div class="card-footer">
         {% block buttons_list %}
-        <a href="{% url 'reports:requirement_report' %}" class="btn btn-primary btn-flat btnTest">
-            <i class="fas fa-clipboard"></i> Reporte Requerimientos
+        <a href="{% url 'reports:requirements-report' %}" class="btn btn-primary btn-flat btnTest">
+            <i class="fas fa-clipboard"></i> Reporte de Requerimientos
         </a>
-        <a href="{% url 'erp:clientemp_list' %}" class="btn btn-success btn-flat">
-            <i class="fas fa-users"></i> Reporte por Grupos
+        <a href="{% url 'reports:group_report' %}" class="btn btn-success btn-flat">
+            <i class="fas fa-users"></i> Requerimientos por Grupos
         </a>
 
-        <a href="{% url 'erp:clientemp_list' %}" class="btn btn-primary btn-flat">
-            <i class="fas fa-sign"></i> Reporte por Estados
+        <a href="{% url 'reports:state_report' %}" class="btn btn-primary btn-flat">
+            <i class="fas fa-sign"></i> Requerimientos por Estados
         </a>
         {% endblock %}
     </div>

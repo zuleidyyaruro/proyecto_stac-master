@@ -1,8 +1,4 @@
-from django.db.models import Count
-from django.db.models.functions import Coalesce
 from django.http import JsonResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
@@ -11,9 +7,8 @@ from core.reports.forms import ReportForm
 from core.requirements.models import Requirements
 
 
-class ReportRequirementsView(TemplateView):
-
-    template_name = "requirement/report.html"
+class ReportStatesViews(TemplateView):
+    template_name ="states/report.html"
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -33,15 +28,15 @@ class ReportRequirementsView(TemplateView):
                 for s in search:
                     data.append([
                         s.id,
-                        s.dueño,
                         s.tipe_req,
                         s.grupoUsuario.name,
-                        s.assign_to.username,
                         s.estadoRequerimiento.estados,
                         s.fechaAsignado.strftime('%Y-%m-%d'),
                     ])
 
-                total=search.count()
+                totalAsignados=search.filter(estadoRequerimiento__estados__exact="Asignado").count()
+                totalAceptados = search.filter(estadoRequerimiento__estados__exact="Aceptado").count()
+                totalTerminado= search.filter(estadoRequerimiento__estados__exact="Terminado").count()
 
                 data.append([
                     '---',
@@ -49,9 +44,32 @@ class ReportRequirementsView(TemplateView):
                     '---',
                     '---',
                     '---',
-                    'Total Requerimientos: ',
-                    total
                 ])
+
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    'Total Estados "Asignados": ',
+                    totalAsignados,
+                ])
+
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    'Total Estados "Aceptados": ',
+                    totalAceptados,
+                ])
+
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    'Total Estados "Terminados": ',
+                    totalTerminado,
+                ])
+
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -60,14 +78,7 @@ class ReportRequirementsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Reporte de Requerimientos'
-        context['entity'] = 'Reportes'
-        context["form"]=ReportForm()
+        context['title'] = 'Reporte Requerimiento por Estados'
+        context["form"] = ReportForm()
         return context
 
-class IndexViewReport(TemplateView):
-    template_name = "report/index-reports.html"
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
