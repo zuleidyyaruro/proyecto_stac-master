@@ -37,6 +37,7 @@ class ReportStatesViews(TemplateView):
                 totalAsignados=search.filter(estadoRequerimiento__estados__exact="Asignado").count()
                 totalAceptados = search.filter(estadoRequerimiento__estados__exact="Aceptado").count()
                 totalTerminado= search.filter(estadoRequerimiento__estados__exact="Terminado").count()
+                totalReAsigandos = search.filter(estadoRequerimiento__estados__exact="Reasignado").count()
 
                 data.append([
                     '---',
@@ -68,6 +69,14 @@ class ReportStatesViews(TemplateView):
                     '---',
                     'Total Estados "Terminados": ',
                     totalTerminado,
+                ])
+
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    'Total Estados "Reasignados": ',
+                    totalReAsigandos,
                 ])
 
             else:

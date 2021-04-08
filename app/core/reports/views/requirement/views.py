@@ -67,7 +67,6 @@ class ReportRequirementViews(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Reporte de requeremientos por Grupos'
+        context['title'] = 'Reporte de requeremientos'
         context["form"] = ReportForm()
         return context
-
